@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="1200px"
+    android:layout_height="800px"
+    android:background="#EFEFEF"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:hint="Search"
+        android:textColor="#000000"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10px"
+        android:textSize="20sp"
+        />
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_height="630px"
+        android:layout_width="match_parent"
+        android:scrollHorizontally="true"
+        android:choiceMode = "singleChoice"
+        android:listSelector = "#B1D5D0"
+        />
+    <Button
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Submit"/>
+</LinearLayout>
