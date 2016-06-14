@@ -4,13 +4,17 @@ function CoolPlugin() {
 	console.log("CoolPlugin.js: is created");
 }
 
-CoolPlugin.prototype.showToast = function(aString){
+CoolPlugin.prototype.showToast = function(aString, success, error){
  console.log("CoolPlugin.js: showToast");
 
  exec(function(result){
-     /*alert("OK" + reply);*/
+     /*alert("OK" + reply);*/ 
+	 		success(result);
+
+	 
    },
-  function(result){
+  function(e){
+	  error(e);
     /*alert("Error" + reply);*/
    },"CoolPlugin","CoolPlugin",[]);
 }

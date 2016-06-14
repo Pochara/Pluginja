@@ -19,7 +19,9 @@
 
 package com.test;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -36,6 +39,8 @@ import org.json.JSONException;
 public class CoolPlugin extends CordovaPlugin {
     private ShowingDialog mClass;
     public static final String TAG = "Cool Plugin";
+
+    String BB="pp";
 
     /**
      * Constructor.
@@ -55,30 +60,29 @@ public class CoolPlugin extends CordovaPlugin {
         Log.e(TAG,"Init CoolPlugin");
     }
 
-    public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(final String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final Context context=this.cordova.getActivity();
         final int duration = Toast.LENGTH_SHORT;
-// Shows a toast
+        // Shows a toast
         Log.v(TAG, "CoolPlugin received:" + action);
-
         if(action.equals("CoolPlugin")) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    showDialog(context);
+                    showDialog(context, callbackContext);
                 }
             });
         }
-
-
-
         return true;
     }
 
-    public String showDialog(Context context)
-    {
+
+    public String showDialog(Context context, CallbackContext callbackContext){
         mClass = new ShowingDialog();
-        return mClass.showDialog(context);
+        return mClass.showDialog(context,callbackContext);
     }
+
+
+
 
 
 

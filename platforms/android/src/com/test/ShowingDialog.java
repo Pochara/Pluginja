@@ -1,8 +1,12 @@
 package com.test;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsMessage;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -10,11 +14,13 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 
+import org.apache.cordova.CallbackContext;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShowingDialog implements OnChildClickListener {
+public class ShowingDialog extends Activity implements OnChildClickListener {
     private int lastExpandedPosition = -1;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -22,13 +28,32 @@ public class ShowingDialog implements OnChildClickListener {
     HashMap<String, List<String>> listDataChild;
     String SetItem="Choose your option",ItemChosen;
     android.app.Dialog dialog;
+    Context context;
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+//        showDialog(context);
+//        if(!dialog.isShowing()) {
+//            Intent returnIntent = new Intent();
+//            returnIntent.putExtra("result", ItemChosen);
+//            setResult(Activity.RESULT_OK, returnIntent);
+//            finish();
+//        }
+    }
+
+    public void onResume(){
+        super.onResume();
+        if(!dialog.isShowing()) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", ItemChosen);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        }
+    }
 
 
 
 
-
-
-    public String showDialog(Context context){
+    public String showDialog(Context context, final CallbackContext callbackContext){
         dialog = new android.app.Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.list);
@@ -52,21 +77,25 @@ public class ShowingDialog implements OnChildClickListener {
             }
         });
         dialog.show();
+        Button Submit = (Button) dialog.findViewById(R.id.Sendbtn);
+        Submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                callbackContext.success(ItemChosen);
+                dialog.cancel();
+            }
+        });
 
-    return "ss";
-
+        return "ss";
     }
 
-    public boolean onChildClick(ExpandableListView parent, View v,
-                                int groupPosition, int childPosition, long id) {
+
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         // TODO Auto-generated method stub
 
         ItemChosen = (String)listAdapter.getChild(groupPosition, childPosition);
 
-
         return false;
     }
-
 
     /*
      * Preparing the list data
